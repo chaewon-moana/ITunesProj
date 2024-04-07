@@ -16,7 +16,7 @@ final class NetworkManager {
         AF.request(url).responseDecodable(of: SearchData.self) { response in
             switch response.result {
             case .success(let success):
-                print(success)
+                //print(success)
                 complectionHandler(success)
             case .failure(let failure):
                 print(failure)

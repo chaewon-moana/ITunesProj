@@ -37,6 +37,8 @@ class SearchTableViewCell: UITableViewCell {
             
             layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
             layout.scrollDirection = .horizontal
+//            layout.minimumLineSpacing = 30
+            layout.minimumInteritemSpacing = 30
             return layout
 }
     private func configureAttribute() {

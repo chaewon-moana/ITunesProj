@@ -30,7 +30,6 @@ struct SoftwareInfo: Decodable {
     let trackContentRating: String
     let sellerName: String
     let version: String
-    
 }
 //struct SoftwareInfo: Decodable {
 //    let artistViewURL: String //같은 제작자가 만든 앱 확인

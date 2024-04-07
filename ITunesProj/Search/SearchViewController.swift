@@ -22,14 +22,42 @@ final class SearchViewController: UIViewController {
         bind()
         view.backgroundColor = .white
         configureView()
-        tableView.rowHeight = 300
+        tableView.rowHeight = 320
         navigationController?.navigationBar.prefersLargeTitles = true
-        //navigationItem.largeTitleDisplayMode = .never
         navigationItem.title = "검색"
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
     }
 
     private func bind() {
+        searchBar.rx.cancelButtonClicked
+            .map { "" }
+            .bind(to: searchBar.rx.text)
+            .disposed(by: disposeBag)
+        
+        searchBar.rx.text.orEmpty
+            .subscribe(with: self) { owner, value in
+                if value.isEmpty {
+                    owner.navigationController?.navigationBar.prefersLargeTitles = true
+                    owner.navigationController?.navigationBar.isHidden = false
+                    owner.searchBar.showsCancelButton = false
+                } else {
+                    owner.navigationController?.navigationBar.prefersLargeTitles = false
+                    owner.navigationController?.navigationBar.isHidden = true
+                    owner.searchBar.showsCancelButton = true
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(SoftwareInfo.self)
+            .subscribe(with: self) { owner, item in
+                
+                let vc = SearchDetailViewController()
+                vc.item = item
+                owner.navigationController?.navigationBar.isHidden = false
+               // let nav = UINavigationController(rootViewController: vc)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
         
         let input = SearchViewModel.Input(searchText: searchBar.rx.text.orEmpty, searchButtonTap: searchBar.rx.searchButtonClicked)
         
@@ -71,6 +99,7 @@ final class SearchViewController: UIViewController {
         }
         searchBar.placeholder = "게임, 앱, 스토리 등"
         searchBar.searchBarStyle = .minimal
+
     }
 }
 

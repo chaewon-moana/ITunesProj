@@ -31,6 +31,7 @@
 		DE9CEBD82BC258F700360192 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEBD72BC258F700360192 /* NetworkManager.swift */; };
 		DE9CEBDB2BC2592000360192 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DE9CEBDA2BC2592000360192 /* Alamofire */; };
 		DE9CEBDD2BC2776500360192 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEBDC2BC2776500360192 /* SearchCollectionViewCell.swift */; };
+		DE9CEBDF2BC2B1C700360192 /* SearchDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEBDE2BC2B1C700360192 /* SearchDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		DE9CEBD52BC253EA00360192 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		DE9CEBD72BC258F700360192 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DE9CEBDC2BC2776500360192 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		DE9CEBDE2BC2B1C700360192 /* SearchDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				DE9CEBD02BC250AE00360192 /* SearchDetailViewController.swift */,
+				DE9CEBDE2BC2B1C700360192 /* SearchDetailViewModel.swift */,
 			);
 			path = SearchDetail;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				DE9CEBCE2BC24C2700360192 /* ArcadeViewController.swift in Sources */,
 				DE9CEBD12BC250AE00360192 /* SearchDetailViewController.swift in Sources */,
 				DE9CEBD82BC258F700360192 /* NetworkManager.swift in Sources */,
+				DE9CEBDF2BC2B1C700360192 /* SearchDetailViewModel.swift in Sources */,
 				DE9CEBA02BC1859C00360192 /* SceneDelegate.swift in Sources */,
 				DE9CEBD62BC253EA00360192 /* SearchTableViewCell.swift in Sources */,
 			);
