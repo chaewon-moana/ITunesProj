@@ -31,7 +31,6 @@ final class SearchDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로가기", style: .plain, target: self, action: nil)
         screenShotCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         bind()
         configureView()
@@ -56,7 +55,7 @@ final class SearchDetailViewController: UIViewController {
         
         scrollView.isUserInteractionEnabled = true
         scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.bottom.equalTo(view.safeAreaLayoutGuide)
             make.width.equalTo(view)
         }
         backView.snp.makeConstraints { make in
@@ -137,7 +136,7 @@ final class SearchDetailViewController: UIViewController {
         
         let cellWidth = UIScreen.main.bounds.width - 20
         let itemWidth = cellWidth / 1.3
-        let itemHeight = itemWidth * 1.7
+        let itemHeight = itemWidth * 2
         
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.scrollDirection = .horizontal

@@ -25,6 +25,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         }
         screenShotImage.clipsToBounds = true
         screenShotImage.layer.cornerRadius = 8
+        screenShotImage.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {

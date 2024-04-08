@@ -13,7 +13,6 @@ final class SearchViewModel {
     let disposeBag = DisposeBag()
     
     var searchData: [SoftwareInfo] = []
-    lazy var items = BehaviorRelay(value: searchData)
     
     struct Input {
         let searchText: ControlProperty<String>
@@ -21,27 +20,22 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchList: PublishSubject<[SoftwareInfo]>
+        let searchList: PublishRelay<[SoftwareInfo]>
     }
     
     func transform(input: Input) -> Output {
-        let searchList = PublishSubject<[SoftwareInfo]>()
-        let screenShotList = PublishSubject<[String]>()
+        let searchList = PublishRelay<[SoftwareInfo]>()
         
          input.searchButtonTap
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(input.searchText)
             .subscribe(with: self) { owner, value in
+                print("서치버튼 눌림")
                 NetworkManager().request(term: value) { data in
-                    owner.items.accept(data.results)
-                    searchList.onNext(data.results)
+                    searchList.accept(data.results)
                 }
             }
             .disposed(by: disposeBag)
-        
-        
-        
-        
         return Output(searchList: searchList)
     }
 }

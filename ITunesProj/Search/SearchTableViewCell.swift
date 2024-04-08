@@ -21,28 +21,29 @@ class SearchTableViewCell: UITableViewCell {
     let starRateLabel = UILabel()
     let artistName = UILabel()
     let genres = UILabel() //배열로 받아옴
-    let screenShotCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+    let screenShotScrollView = UIScrollView()
+    //let screenShotCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        screenShotCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        /*screenShotCollectionView.register(SearchCollectionViewCell.self, forCellWithR*/euseIdentifier: SearchCollectionViewCell.identifier)
         configureAttribute()
     }
-        static func collectionViewLayout() -> UICollectionViewFlowLayout{
-            let layout = UICollectionViewFlowLayout()
-            
-            let cellWidth = UIScreen.main.bounds.width - 20
-            let itemWidth = cellWidth / 3
-            let itemHeight = itemWidth * 1.7
-            
-            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-            layout.scrollDirection = .horizontal
-//            layout.minimumLineSpacing = 30
-            layout.minimumInteritemSpacing = 30
-            return layout
-}
+//        static func collectionViewLayout() -> UICollectionViewFlowLayout{
+//            let layout = UICollectionViewFlowLayout()
+//            
+//            let cellWidth = UIScreen.main.bounds.width - 20
+//            let itemWidth = cellWidth / 3
+//            let itemHeight = itemWidth * 1.7
+//            
+//            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+//            layout.scrollDirection = .horizontal
+////            layout.minimumLineSpacing = 30
+//            layout.minimumInteritemSpacing = 30
+//            return layout
+//}
     private func configureAttribute() {
-        contentView.addSubviews([IconImage, title, downloadButton, starRateImage, starRateLabel, artistName, genres, screenShotCollectionView])
+        contentView.addSubviews([IconImage, title, downloadButton, starRateImage, starRateLabel, artistName, genres, screenShotScrollView])
         IconImage.snp.makeConstraints { make in
             make.size.equalTo(52)
             make.top.leading.equalTo(contentView.safeAreaLayoutGuide).inset(8)
@@ -75,7 +76,7 @@ class SearchTableViewCell: UITableViewCell {
             make.trailing.equalTo(self.safeAreaLayoutGuide).inset(8)
             make.top.equalTo(starRateLabel)
         }
-        screenShotCollectionView.snp.makeConstraints { make in
+        screenShotScrollView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(self.safeAreaLayoutGuide)
             make.top.equalTo(starRateImage.snp.bottom).offset(8)
         }
