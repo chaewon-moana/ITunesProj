@@ -36,6 +36,7 @@ final class SearchViewModel {
                 }
             }
             .disposed(by: disposeBag)
+        
         return Output(searchList: searchList)
     }
 }

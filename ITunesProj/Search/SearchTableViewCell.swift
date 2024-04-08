@@ -15,40 +15,29 @@ class SearchTableViewCell: UITableViewCell {
     let disposeBag = DisposeBag()
     
     let IconImage = UIImageView()
-    let title = UILabel()
+    let titleLabel = UILabel()
     let downloadButton = UIButton()
     let starRateImage = UIImageView()
     let starRateLabel = UILabel()
     let artistName = UILabel()
     let genres = UILabel() //배열로 받아옴
+    let backView = UIStackView()
     let screenShotScrollView = UIScrollView()
-    //let screenShotCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        /*screenShotCollectionView.register(SearchCollectionViewCell.self, forCellWithR*/euseIdentifier: SearchCollectionViewCell.identifier)
+        
         configureAttribute()
     }
-//        static func collectionViewLayout() -> UICollectionViewFlowLayout{
-//            let layout = UICollectionViewFlowLayout()
-//            
-//            let cellWidth = UIScreen.main.bounds.width - 20
-//            let itemWidth = cellWidth / 3
-//            let itemHeight = itemWidth * 1.7
-//            
-//            layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
-//            layout.scrollDirection = .horizontal
-////            layout.minimumLineSpacing = 30
-//            layout.minimumInteritemSpacing = 30
-//            return layout
-//}
+
     private func configureAttribute() {
-        contentView.addSubviews([IconImage, title, downloadButton, starRateImage, starRateLabel, artistName, genres, screenShotScrollView])
+        contentView.addSubviews([IconImage, titleLabel, downloadButton, starRateImage, starRateLabel, artistName, genres, screenShotScrollView])
+        screenShotScrollView.addSubview(backView)
         IconImage.snp.makeConstraints { make in
             make.size.equalTo(52)
             make.top.leading.equalTo(contentView.safeAreaLayoutGuide).inset(8)
         }
-        title.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(IconImage.snp.trailing).offset(12)
             make.centerY.equalTo(IconImage)
             make.trailing.equalTo(downloadButton.snp.leading).offset(-4)
@@ -80,9 +69,14 @@ class SearchTableViewCell: UITableViewCell {
             make.horizontalEdges.bottom.equalTo(self.safeAreaLayoutGuide)
             make.top.equalTo(starRateImage.snp.bottom).offset(8)
         }
+        backView.snp.makeConstraints { make in
+            make.height.equalTo(screenShotScrollView)
+            make.horizontalEdges.equalTo(screenShotScrollView)
+        }
+        
         IconImage.clipsToBounds = true
         IconImage.layer.cornerRadius = 8
-        title.font = .systemFont(ofSize: 17, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
         starRateImage.image = UIImage(systemName: "star.fill")
         starRateImage.tintColor = .systemBlue
         starRateLabel.font = .systemFont(ofSize: 13)
@@ -96,13 +90,30 @@ class SearchTableViewCell: UITableViewCell {
         genres.font = .systemFont(ofSize: 13)
         genres.textColor = .lightGray
      
+        backView.axis = .vertical
         
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        screenShotCollectionView.delegate = nil
-        screenShotCollectionView.dataSource = nil
+//        screenShotCollectionView.delegate = nil
+//        screenShotCollectionView.dataSource = nil
+    }
+    
+    //TODO: stackView 쌓아서 차례차례 나오도록 만들기,,,,
+    func screenShot(_ list: [String]) {
+        print("작동은 되구 있구만유")
+        for idx in list {
+            let url = URL(string: idx)
+            let screenShot = UIImageView()
+            screenShot.backgroundColor = .red
+            screenShot.contentMode = .scaleAspectFill
+            backView.addSubview(screenShot)
+            screenShot.snp.makeConstraints { make in
+                make.verticalEdges.equalToSuperview().inset(8)
+                make.width.equalTo(80)
+            }
+        }
     }
     
     required init?(coder: NSCoder) {

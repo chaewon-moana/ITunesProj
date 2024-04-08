@@ -50,25 +50,40 @@ final class SearchViewController: UIViewController {
         
         output.searchList
             .bind(to: tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
-                
-                //Cell에서도 처리할 수 있음
-                cell.title.text = element.trackName
+                cell.titleLabel.text = element.trackName
                 let url = URL(string: element.artworkUrl60)
                 cell.IconImage.kf.setImage(with: url)
-            
                 cell.starRateLabel.text = String(format: "%.1f", element.averageUserRating)
                 cell.artistName.text = element.artistName
                 cell.genres.text = element.genres.first ?? ""
-                
-                let screenShotList = BehaviorSubject(value:element.screenshotUrls)
+                let screenShotList = BehaviorRelay(value: element.screenshotUrls)
                 screenShotList
-                    .bind(to: cell.screenShotCollectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (item, element, cell) in
-                        let screenshot = URL(string: element)
-                        cell.screenShotImage.kf.setImage(with: screenshot)
+                    .subscribe(with: self) { owner, list in
+                        cell.screenShot(list)
                     }
                     .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
+        
+//        output.searchList
+//            .bind(to: tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
+//                
+//                cell.titleLabel.text = element.trackName
+//                let url = URL(string: element.artworkUrl60)
+//                cell.IconImage.kf.setImage(with: url)
+//                cell.starRateLabel.text = String(format: "%.1f", element.averageUserRating)
+//                cell.artistName.text = element.artistName
+//                cell.genres.text = element.genres.first ?? ""
+//                
+//                let screenShotList = BehaviorSubject(value:element.screenshotUrls)
+//                screenShotList
+//                    .bind(to: cell.screenShotCollectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (item, element, cell) in
+//                        let screenshot = URL(string: element)
+//                        cell.screenShotImage.kf.setImage(with: screenshot)
+//                    }
+//                    .disposed(by: cell.disposeBag)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     private func configureView() {
