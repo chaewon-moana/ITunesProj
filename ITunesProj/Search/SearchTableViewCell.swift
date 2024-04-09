@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class SearchTableViewCell: UITableViewCell {
     
@@ -33,6 +34,7 @@ class SearchTableViewCell: UITableViewCell {
     private func configureAttribute() {
         contentView.addSubviews([IconImage, titleLabel, downloadButton, starRateImage, starRateLabel, artistName, genres, screenShotScrollView])
         screenShotScrollView.addSubview(backView)
+    
         IconImage.snp.makeConstraints { make in
             make.size.equalTo(52)
             make.top.leading.equalTo(contentView.safeAreaLayoutGuide).inset(8)
@@ -70,10 +72,10 @@ class SearchTableViewCell: UITableViewCell {
             make.top.equalTo(starRateImage.snp.bottom).offset(8)
         }
         backView.snp.makeConstraints { make in
-            make.height.equalTo(screenShotScrollView)
-            make.horizontalEdges.equalTo(screenShotScrollView)
+            make.verticalEdges.height.equalTo(screenShotScrollView)
+            make.horizontalEdges.equalTo(screenShotScrollView).inset(10)
         }
-        
+ 
         IconImage.clipsToBounds = true
         IconImage.layer.cornerRadius = 8
         titleLabel.font = .systemFont(ofSize: 17, weight: .bold)
@@ -90,8 +92,11 @@ class SearchTableViewCell: UITableViewCell {
         genres.font = .systemFont(ofSize: 13)
         genres.textColor = .lightGray
      
-        backView.axis = .vertical
-        
+        backView.axis = .horizontal
+        backView.spacing = 60
+        backView.distribution = .fill
+        backView.isLayoutMarginsRelativeArrangement = true
+        backView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
     }
     
     override func prepareForReuse() {
@@ -103,17 +108,21 @@ class SearchTableViewCell: UITableViewCell {
     //TODO: stackView 쌓아서 차례차례 나오도록 만들기,,,,
     func screenShot(_ list: [String]) {
         print("작동은 되구 있구만유")
-        for idx in list {
-            let url = URL(string: idx)
-            let screenShot = UIImageView()
-            screenShot.backgroundColor = .red
-            screenShot.contentMode = .scaleAspectFill
-            backView.addSubview(screenShot)
-            screenShot.snp.makeConstraints { make in
-                make.verticalEdges.equalToSuperview().inset(8)
-                make.width.equalTo(80)
+        list
+            .map { idx in
+                let screenShot: UIImageView = {
+                    let view = UIImageView()
+                    let url = URL(string: idx)
+                    view.kf.setImage(with: url)
+                    view.contentMode = .scaleAspectFill
+                    return view
+                }()
+                screenShot.snp.makeConstraints { make in
+                    make.width.equalTo(80)
+                }
+                return screenShot
             }
-        }
+            .forEach(backView.addArrangedSubview)
     }
     
     required init?(coder: NSCoder) {
